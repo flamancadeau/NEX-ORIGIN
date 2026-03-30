@@ -33,8 +33,8 @@ export function Index() {
                 {/* Shop By Category */}
                 <div className="px-6 md:px-12 py-10 space-y-6">
                     <div className="flex items-end justify-between">
-                        <h2 className="text-2xl font-black tracking-tight">Shop by Category</h2>
-                        <Button asChild variant="ghost" className="font-bold gap-1 text-sm text-primary hover:text-primary/80">
+                        <h2 className="text-2xl font-black tracking-tight" style={{ fontFamily: 'var(--font-brand-origin)' }}>Shop by Category</h2>
+                        <Button asChild variant="ghost" className="font-bold gap-1 text-sm text-[#caa149] hover:text-[#f2d975] brand-tagline">
                             <Link to="/products">View All <ArrowRight className="size-4" /></Link>
                         </Button>
                     </div>
@@ -44,8 +44,8 @@ export function Index() {
                 {/* New Arrivals */}
                 <div className="px-6 md:px-12 py-10 space-y-6">
                     <div className="flex items-end justify-between">
-                        <h2 className="text-2xl font-black tracking-tight">New Arrivals</h2>
-                        <Button asChild variant="ghost" className="font-bold gap-1 text-sm hover:text-primary">
+                        <h2 className="text-2xl font-black tracking-tight" style={{ fontFamily: 'var(--font-brand-origin)' }}>New Arrivals</h2>
+                        <Button asChild variant="ghost" className="font-bold gap-1 text-sm text-[#caa149] hover:text-[#f2d975] brand-tagline">
                             <Link to="/products?filter=new">View All <ArrowRight className="size-4" /></Link>
                         </Button>
                     </div>
@@ -59,8 +59,8 @@ export function Index() {
                 {/* Hot Deals */}
                 <div className="px-6 md:px-12 py-10 space-y-6">
                     <div className="flex items-end justify-between">
-                        <h2 className="text-2xl font-black tracking-tight">🔥 Hot Deals</h2>
-                        <Button asChild variant="ghost" className="font-bold gap-1 text-sm hover:text-primary">
+                        <h2 className="text-2xl font-black tracking-tight" style={{ fontFamily: 'var(--font-brand-origin)' }}>🔥 Hot Deals</h2>
+                        <Button asChild variant="ghost" className="font-bold gap-1 text-sm text-[#caa149] hover:text-[#f2d975] brand-tagline">
                             <Link to="/products?filter=deals">View All <ArrowRight className="size-4" /></Link>
                         </Button>
                     </div>
@@ -73,14 +73,14 @@ export function Index() {
 
                 {/* WhatsApp CTA — matching reference exactly */}
                 <div className="px-6 md:px-12 py-10">
-                    <div className="bg-primary rounded-2xl p-10 md:p-14 flex flex-col items-center text-center space-y-4">
-                        <h2 className="text-2xl md:text-3xl font-black text-primary-foreground">
+                    <div className="bg-[#f2d975] rounded-2xl p-10 md:p-14 flex flex-col items-center text-center space-y-4">
+                        <h2 className="text-2xl md:text-3xl font-black text-[#1a1a1b]" style={{ fontFamily: 'var(--font-brand-origin)' }}>
                             Order via WhatsApp — It's Easy!
                         </h2>
-                        <p className="text-primary-foreground/70 font-medium text-sm max-w-lg">
+                        <p className="text-[#1a1a1b]/70 font-medium text-sm max-w-lg brand-tagline">
                             Browse products, tap the WhatsApp button, and place your order instantly.
                         </p>
-                        <Button size="lg" className="rounded-full px-8 h-12 font-bold bg-background text-foreground hover:bg-background/90">
+                        <Button size="lg" className="rounded-full px-8 h-12 font-bold bg-[#000000] text-[#ffffff] hover:bg-[#1a1a1b] brand-tagline">
                             Chat with Us on WhatsApp
                         </Button>
                     </div>
@@ -99,8 +99,8 @@ function FeatureItem({ icon, title, desc }: { icon: React.ReactNode, title: stri
                 {icon}
             </div>
             <div className="flex flex-col">
-                <span className="font-bold text-sm">{title}</span>
-                <span className="text-[11px] text-muted-foreground">{desc}</span>
+                <span className="font-bold text-sm brand-tagline">{title}</span>
+                <span className="text-[11px] text-muted-foreground brand-tagline">{desc}</span>
             </div>
         </div>
     )

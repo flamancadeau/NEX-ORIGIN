@@ -51,11 +51,11 @@ export function HeroBanner() {
                         <h2 className={cn(
                             "text-3xl md:text-6xl font-black text-white tracking-tighter transition-all duration-700 delay-100",
                             index === current ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-                        )}>
+                        )} style={{ fontFamily: 'var(--font-brand-origin)' }}>
                             {banner.title}
                         </h2>
                         <p className={cn(
-                            "text-sm md:text-xl text-white/80 font-medium transition-all duration-700 delay-200",
+                            "text-sm md:text-xl text-white/80 font-medium transition-all duration-700 delay-200 brand-tagline",
                             index === current ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
                         )}>
                             {banner.subtitle}
@@ -64,7 +64,7 @@ export function HeroBanner() {
                             "pt-4 transition-all duration-700 delay-300",
                             index === current ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
                         )}>
-                            <Button asChild size="lg" className="rounded-full px-8 h-12 font-bold bg-primary text-primary-foreground hover:scale-105 transition-transform">
+                            <Button asChild size="lg" className="rounded-full px-8 h-12 font-bold bg-[#f2d975] text-[#1a1a1b] hover:bg-[#caa149] hover:scale-105 transition-transform brand-tagline">
                                 <Link to={banner.link || "/products"}>
                                     Shop Now <ArrowRight className="ml-2 size-4" />
                                 </Link>
