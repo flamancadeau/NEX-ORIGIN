@@ -3,8 +3,8 @@ import { useParams, Link } from "react-router-dom"
 import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
 import { ProductCard } from "@/components/ProductCard"
+import { getProducts } from "@/data/storeService"
 import {
-    PRODUCTS,
     formatPrice,
     calculateFinalPrice,
     generateWhatsAppLink
@@ -26,7 +26,8 @@ import { useCart } from "@/context/CartContext"
 
 export function ProductDetail() {
     const { id } = useParams();
-    const product = PRODUCTS.find(p => p.id === id);
+    const products = getProducts();
+    const product = products.find(p => p.id === id);
     const [selectedImage, setSelectedImage] = React.useState(product?.image);
     const [quantity, setQuantity] = React.useState(1);
     const { addToCart } = useCart();
@@ -55,7 +56,7 @@ export function ProductDetail() {
         window.open(generateWhatsAppLink(product.storePhone, message), "_blank");
     };
 
-    const relatedProducts = PRODUCTS
+    const relatedProducts = products
         .filter(p => p.categorySlug === product.categorySlug && p.id !== product.id)
         .slice(0, 4);
 
@@ -84,11 +85,14 @@ export function ProductDetail() {
                                     alt={product.name}
                                     className="w-full h-full object-cover"
                                 />
-                                <div className="absolute top-4 left-4 flex gap-2">
-                                    {product.isNew && (
+                                <div className="absolute top-4 left-4 flex flex-col gap-2">
+                                    {product.stockQuantity <= 0 && (
+                                        <Badge className="bg-red-500 text-white font-bold px-3 py-1 border-0 rounded-sm shadow-xl">OUT OF STOCK</Badge>
+                                    )}
+                                    {product.isNew && product.stockQuantity > 0 && (
                                         <Badge className="bg-badge-new text-white font-bold px-3 py-1 border-0 rounded-sm">NEW</Badge>
                                     )}
-                                    {product.discountPercentage && (
+                                    {product.discountPercentage && product.stockQuantity > 0 && (
                                         <Badge className="bg-badge-promo text-white font-bold px-3 py-1 border-0 rounded-sm">-{product.discountPercentage}% OFF</Badge>
                                     )}
                                 </div>
@@ -140,32 +144,57 @@ export function ProductDetail() {
 
                             {/* Quantity Selector */}
                             <div className="flex items-center gap-4 pt-2">
-                                <div className="flex items-center border border-border rounded-lg">
+                                <div className={cn(
+                                    "flex items-center border border-border rounded-lg",
+                                    product.stockQuantity <= 0 && "opacity-50 pointer-events-none bg-muted/50"
+                                )}>
                                     <button
                                         onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                                        className="h-10 w-10 flex items-center justify-center hover:bg-muted transition-colors"
+                                        disabled={product.stockQuantity <= 0}
+                                        className="h-10 w-10 flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-30"
                                     >
                                         <Minus className="size-4" />
                                     </button>
-                                    <span className="w-12 text-center font-bold text-lg">{quantity}</span>
+                                    <span className="w-12 text-center font-bold text-lg">{product.stockQuantity > 0 ? quantity : 0}</span>
                                     <button
                                         onClick={() => setQuantity(q => Math.min(product.stockQuantity, q + 1))}
-                                        className="h-10 w-10 flex items-center justify-center hover:bg-muted transition-colors"
+                                        disabled={product.stockQuantity <= 0}
+                                        className="h-10 w-10 flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-30"
                                     >
                                         <Plus className="size-4" />
                                     </button>
                                 </div>
-                                <span className="text-sm text-muted-foreground">{product.stockQuantity} in stock</span>
+                                <div className="flex flex-col">
+                                    <span className={cn(
+                                        "text-sm font-bold",
+                                        product.stockQuantity > 10 ? "text-emerald-500" : product.stockQuantity > 0 ? "text-yellow-600" : "text-red-500"
+                                    )}>
+                                        {product.stockQuantity > 0 ? `${product.stockQuantity} in stock` : "Out of Stock"}
+                                    </span>
+                                    {product.stockQuantity > 0 && <span className="text-[10px] text-muted-foreground">Ready for delivery in Kigali</span>}
+                                </div>
                             </div>
 
                             {/* CTAs — matching reference */}
                             <div className="grid grid-cols-5 gap-3 pt-2">
                                 <Button
                                     onClick={handleAddToCart}
+                                    disabled={product.stockQuantity <= 0}
                                     size="lg"
-                                    className="col-span-3 h-12 font-bold gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
+                                    className={cn(
+                                        "col-span-3 h-12 font-bold gap-2 transition-all",
+                                        product.stockQuantity > 0
+                                            ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                                            : "bg-muted text-muted-foreground cursor-not-allowed"
+                                    )}
                                 >
-                                    <ShoppingCart className="size-5" /> Add to Cart
+                                    {product.stockQuantity > 0 ? (
+                                        <>
+                                            <ShoppingCart className="size-5" /> Add to Cart
+                                        </>
+                                    ) : (
+                                        "Out of Stock"
+                                    )}
                                 </Button>
                                 <Button
                                     onClick={handleWhatsAppOrder}

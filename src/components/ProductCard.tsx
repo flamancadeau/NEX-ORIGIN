@@ -58,7 +58,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
                     />
 
                     <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                        {product.isNew && (
+                        {product.stockQuantity <= 0 && (
+                            <Badge className="bg-red-500 hover:bg-red-500 text-white border-0 font-bold px-2.5 py-0.5 text-[10px] rounded-sm">
+                                OUT OF STOCK
+                            </Badge>
+                        )}
+                        {product.isNew && product.stockQuantity > 0 && (
                             <Badge className="bg-badge-new hover:bg-badge-new text-white border-0 font-bold px-2.5 py-0.5 text-[10px] rounded-sm">
                                 NEW
                             </Badge>
@@ -95,10 +100,22 @@ export function ProductCard({ product, className }: ProductCardProps) {
                 <CardFooter className="px-4 pb-4 pt-0 flex gap-2">
                     <Button
                         size="sm"
-                        className="flex-1 h-9 text-xs font-bold gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90 transition-all active:scale-95"
+                        disabled={product.stockQuantity <= 0}
+                        className={cn(
+                            "flex-1 h-9 text-xs font-bold gap-1.5 transition-all active:scale-95",
+                            product.stockQuantity > 0
+                                ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                                : "bg-muted text-muted-foreground cursor-not-allowed border border-border/50"
+                        )}
                         onClick={handleAddToCart}
                     >
-                        <ShoppingCart className="size-3.5" /> Add to Cart
+                        {product.stockQuantity > 0 ? (
+                            <>
+                                <ShoppingCart className="size-3.5" /> Add to Cart
+                            </>
+                        ) : (
+                            "Out of Stock"
+                        )}
                     </Button>
                     <Button
                         size="sm"

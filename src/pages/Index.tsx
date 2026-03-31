@@ -4,13 +4,14 @@ import { HeroBanner } from "@/components/HeroBanner"
 import { CategoryGrid } from "@/components/CategoryGrid"
 import { ProductCard } from "@/components/ProductCard"
 import { Button } from "@/components/ui/button"
-import { PRODUCTS } from "@/data/mockData"
+import { getProducts } from "@/data/storeService"
 import { ArrowRight, Truck, ShieldCheck, Headphones, RotateCcw } from "lucide-react"
 import { Link } from "react-router-dom"
 
 export function Index() {
-    const newArrivals = PRODUCTS.filter(p => p.isNew).slice(0, 4);
-    const hotDeals = PRODUCTS.filter(p => p.discountPercentage).slice(0, 4);
+    const products = getProducts();
+    const newArrivals = products.filter(p => p.isNew).slice(0, 4);
+    const hotDeals = products.filter(p => p.discountPercentage).slice(0, 4);
 
     return (
         <div className="flex flex-col min-h-screen bg-background">

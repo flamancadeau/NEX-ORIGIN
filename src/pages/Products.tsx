@@ -2,7 +2,7 @@ import { useSearchParams, Link } from "react-router-dom"
 import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
 import { ProductCard } from "@/components/ProductCard"
-import { PRODUCTS, CATEGORIES } from "@/data/mockData"
+import { getProducts, CATEGORIES } from "@/data/storeService"
 import { cn } from "@/lib/utils"
 import { ChevronRight, LayoutGrid } from "lucide-react"
 
@@ -19,7 +19,8 @@ export function Products() {
     const searchBarQuery = searchParams.get("search");
     const filterType = searchParams.get("filter");
 
-    const filteredProducts = PRODUCTS.filter(product => {
+    const products = getProducts();
+    const filteredProducts = products.filter(product => {
         if (categorySlug && product.categorySlug !== categorySlug) return false;
         if (searchBarQuery) {
             const q = searchBarQuery.toLowerCase();

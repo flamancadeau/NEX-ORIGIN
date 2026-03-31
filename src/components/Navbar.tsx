@@ -75,8 +75,8 @@ export function Navbar() {
             <div className={cn(
                 "sticky top-0 z-40 py-3 px-6 md:px-12 flex items-center justify-between gap-6 transition-all duration-300 border-b",
                 scrolled
-                    ? "bg-[#000000] text-[#ffffff] border-[#000000] shadow-lg"
-                    : "bg-[#ffffff] text-[#1a1a1b] border-border/40"
+                    ? "bg-black/80 backdrop-blur-md text-[#ffffff] border-[#ffffff]/10 shadow-lg"
+                    : "bg-white/80 backdrop-blur-md text-[#1a1a1b] border-border/40"
             )}>
                 {/* Mobile Menu */}
                 <Sheet>
@@ -162,10 +162,10 @@ export function Navbar() {
 
             {/* Categories Nav */}
             <nav className={cn(
-                "px-6 md:px-12 hidden md:flex items-center gap-8 overflow-x-auto no-scrollbar py-3 border-b transition-all duration-300",
+                "px-6 md:px-12 hidden md:flex items-center gap-8 overflow-x-auto no-scrollbar py-3 border-b transition-all duration-300 sticky top-[65px] z-30",
                 scrolled
-                    ? "bg-[#000000]/95 text-[#ffffff] border-[#000000]/80"
-                    : "bg-[#ffffff] border-border/40"
+                    ? "bg-black/90 backdrop-blur-md text-[#ffffff] border-white/10"
+                    : "bg-white/90 backdrop-blur-md border-border/40"
             )}>
                 <Link
                     to="/products"
